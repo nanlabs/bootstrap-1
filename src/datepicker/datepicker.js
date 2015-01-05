@@ -62,6 +62,12 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     };
   };
 
+  var openDatepicker = function() {
+            $timeout(function() {
+                $scope.datepickerMode = datepickerConfig.datepickerMode;
+            }, 0 , false);
+  };
+
   this.render = function() {
     if ( ngModelCtrl.$modelValue ) {
       var date = new Date( ngModelCtrl.$modelValue ),
@@ -150,6 +156,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
   // Listen for focus requests from popup directive
   $scope.$on('datepicker.focus', focusElement);
+  $scope.$on('datepicker.open', openDatepicker);
 
   $scope.keydown = function( evt ) {
     var key = $scope.keys[evt.which];
@@ -575,6 +582,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       };
 
       scope.$watch('isOpen', function(value) {
+        scope.$broadcast('datepicker.open');
         if (value) {
           scope.$broadcast('datepicker.focus');
           scope.position = appendToBody ? $position.offset(element) : $position.position(element);
