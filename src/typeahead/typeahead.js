@@ -291,7 +291,10 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
 
         } else if (evt.which === 13 || evt.which === 9) {
           scope.$apply(function () {
-            scope.select(scope.activeIdx);
+            // To avoid selecting on searches when no match is found
+            if (scope.matches.length>0) {
+              scope.select(scope.activeIdx);
+            }
           });
 
         } else if (evt.which === 27) {
