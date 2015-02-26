@@ -447,7 +447,8 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       currentText: '@',
       clearText: '@',
       closeText: '@',
-      dateDisabled: '&'
+      dateDisabled: '&',
+      onDateChanged: '&'
     },
     link: function(scope, element, attrs, ngModel) {
       var dateFormat,
@@ -542,6 +543,9 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         if ( closeOnDateSelection ) {
           scope.isOpen = false;
           element[0].focus();
+        }
+        if (scope.onDateChanged) {
+          scope.onDateChanged({ $date: scope.date })
         }
       };
 
